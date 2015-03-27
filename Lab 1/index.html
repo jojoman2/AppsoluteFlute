@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+    <link rel="shortcut icon" href="favicon.ico">
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+
+
+</head>
+<body>
+    <div id="map-canvas">
+
+    </div>
+    <div id="buttons">
+        <button id="zoom-in-button">+</button>
+        <button id="zoom-out-button">-</button>
+        <br />
+        <br />
+        <button id="pan-north">North</button>
+
+        <br />
+        <button id="pan-west">West</button>
+        <button id="pan-east">East</button>
+        <br />
+        <button id="pan-south">South</button>
+    </div>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    <!--<script src="controldiv.js"></script>-->
+    <script type="text/javascript">
+        function moveMapToNewChords(coords,map){
+            var latLng = new google.maps.LatLng(coords.lat, coords.lng); //Makes a latlng
+            map.panTo(latLng);
+        }
+
+        function initialize() {
+            currentPosition = { lat: 59.347327, lng: 18.073537};
+            var mapOptions = {
+                center: currentPosition,
+                zoom: 15,
+                zoomControl: false,
+                panControl: false,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            };
+            var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+            map.setTilt(0);
+
+
+
+            buttons = document.getElementById('buttons');
+
+            zoomin = document.getElementById('zoom-in-button');
+            google.maps.event.addDomListener(zoomin, 'click', function() {
+                var currentZoomLevel = map.getZoom();
+                if (currentZoomLevel != 21) {
+                    map.setZoom(currentZoomLevel + 1);
+                }
+            });
+
+            zoomout = document.getElementById('zoom-out-button');
+            google.maps.event.addDomListener(zoomout, 'click', function() {
+                var currentZoomLevel = map.getZoom();
+                if (currentZoomLevel != 0) {
+                    map.setZoom(currentZoomLevel -1);
+                }
+            });
+
+            var panNorth = document.getElementById('pan-north');
+            google.maps.event.addDomListener(panNorth, 'click', function() {
+                currentPosition = {lat: currentPosition.lat+0.004, lng: currentPosition.lng};
+                moveMapToNewChords(currentPosition,map);
+            });
+
+            var panWest = document.getElementById('pan-west');
+            google.maps.event.addDomListener(panWest, 'click', function() {
+                currentPosition = {lat: currentPosition.lat, lng: currentPosition.lng-0.004};
+                moveMapToNewChords(currentPosition,map);
+            });
+
+            var panEast = document.getElementById('pan-east');
+            google.maps.event.addDomListener(panEast, 'click', function() {
+                currentPosition = {lat: currentPosition.lat, lng: currentPosition.lng+0.004};
+                moveMapToNewChords(currentPosition,map);
+            });
+
+            var panSouth = document.getElementById('pan-south');
+            google.maps.event.addDomListener(panSouth, 'click', function() {
+                currentPosition = {lat: currentPosition.lat-0.004, lng: currentPosition.lng};
+                moveMapToNewChords(currentPosition,map);
+            });
+
+            map.controls[google.maps.ControlPosition.LEFT_TOP].push(buttons);
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(currentPosition.lat,currentPosition.lng),
+                map: map,
+                title: "CENTER OF KTH!"
+            })
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(currentPosition.lat+0.002,currentPosition.lng-0.002),
+                map: map,
+                title: "I am here!!!",
+                animation: google.maps.Animation.BOUNCE,
+                draggable: true
+            })
+
+
+
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        /*$(function() {
+
+         alert($("#zoomin").size());
+         $("#zoomin").click(function () {
+
+         });
+         $("#zoomout").click(function () {
+         alert("ZOOOM OUT");
+         var currentZoomLevel = map.getZoom();
+         if (currentZoomLevel != 0) {
+         map.setZoom(currentZoomLevel - 1);
+         }
+         });
+         });*/
+    </script>
+</body>
+</html>
