@@ -6,6 +6,10 @@
     </style>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href=http://vignette4.wikia.nocookie.net/fantendo/images/5/52/Mushroom2.PNG/revision/latest?cb=20111123224555">
+    <meta id="viewport"
+          name="viewport"
+          content="width=1024, height=768, initial-scale=0, minimum-scale=0.25" />
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
 
 
@@ -30,6 +34,10 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
     <!--<script src="controldiv.js"></script>-->
     <script type="text/javascript">
+        document.getElementById("viewport").setAttribute("content",
+                "initial-scale=0.5; maximum-scale=1.0; user-scalable=0;");
+
+
         function moveMapToNewChords(coords,map){
             var latLng = new google.maps.LatLng(coords.lat, coords.lng); //Makes a latlng
             map.panTo(latLng);
@@ -39,9 +47,11 @@
             currentPosition = { lat: 15.347327, lng: 11.073537};
             var mapOptions = {
                 center: currentPosition,
-                zoom: 15,
+                zoom: 13,
                 zoomControl: false,
                 panControl: false,
+                heading: 90,
+                tilt: 45,
                 mapTypeId: google.maps.MapTypeId.HYBRID
             };
             var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
@@ -94,9 +104,9 @@
             map.controls[google.maps.ControlPosition.LEFT_TOP].push(buttons);
 
             var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(currentPosition.lat,currentPosition.lng),
+                position: new google.maps.LatLng(59.336684,18.085292),
                 map: map,
-                title: "CENTER OF KTH!"
+                title: "Test"
             });
 
             var marker2 = new google.maps.Marker({
@@ -146,6 +156,7 @@
                     var pos = new google.maps.LatLng(position.coords.latitude,
                             position.coords.longitude);
                     map.setCenter(pos);
+                    currentPosition = { lat: position.coords.latitude, lng: position.coords.longitude}
                 });
 
             }
