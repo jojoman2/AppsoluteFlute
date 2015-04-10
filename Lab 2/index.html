@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- Notice the ng-app Angular directive. This tells Angular where the application starts and also
+which module to associate the app with. In app.js we create the "dinnerPlanner" module. -->
+<html lang="en" ng-app="newsFeed">
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.js"></script>
+    <script src="lib/mobile-angular-ui-1.2.0-beta.11/dist/js/mobile-angular-ui.js"></script>
+    <link rel="stylesheet" href="lib/mobile-angular-ui-1.2.0-beta.11/dist/css/mobile-angular-ui-base.min.css" />
+    <script src="app.js"></script>
+
+</head>
+<body>
+<div class="navbar navbar-app navbar-absolute-top">
+
+    <div class="navbar-brand navbar-brand-center">
+        News Feed
+    </div>
+
+    <div class="btn-group pull-left">
+        <div class="btn btn-navbar">
+            <select class="form-control">
+                <option>Food</option>
+                <option>Business</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+<div class="app-body">
+    <ng-view class="app-content"></ng-view>
+</div>
+</body>
+</html>
