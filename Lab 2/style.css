@@ -1,0 +1,25 @@
+body{
+	margin-top: 10px;
+}
+
+
+#dropDown {
+	padding-top: 10px;
+
+}
+
+#newsLogo{
+	float: left;
+}
+
+#heading{
+	padding-bottom: 5%;
+}
+
+.navbar-absolute-top{
+	padding: 3%;
+}
+
+.app-content{
+	margin-top: 5%;
+}
