@@ -1,1 +1,41 @@
-detail-view
+<!-- Detail-view -->
+
+
+
+<div class="col-xs-12" id="detailView">
+
+	<div class="col-xs-12" id="newsTitle">
+		<h4 class="media-heading">{{newsItem.title}}</h4>
+		{{newsItem.publishedDate}}	
+	</div>
+
+	<div class="col-xs-12" id="newsImage">
+		<a href="#" class="thumbnail">
+      		<img ng-src="{{newsItem.image}}">
+    	</a>
+    </div>
+
+    <div class="col-xs-12" id="newsLink">
+    	{{newsItem.link}}
+    </div>
+
+
+</div>
+
+<!--
+
+<ul class="media-list">
+  <li class="media">
+    <div class="media-left">
+		<a href="#" class="thumbnail">
+      		<img src="..." alt="...">
+    	</a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">{{newsItem.title}}</h4>
+      <p>bla bla bla</p>
+    </div>
+  </li>
+</ul>
+
+-->
