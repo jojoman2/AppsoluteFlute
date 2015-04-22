@@ -12,6 +12,7 @@ body{
 	background: #FFFFFF;
 	border-color: #ffffff;
 	border-style: none;
+	padding-top: 7%;
 }
 
 #newsLogo{
@@ -45,4 +46,5 @@ body{
 .news-heading{
 	/*text-align: center;*/
 	font-weight: bold;
+	padding-top: 3%;
 }
