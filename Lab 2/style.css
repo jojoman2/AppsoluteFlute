@@ -46,5 +46,11 @@ body{
 .news-heading{
 	/*text-align: center;*/
 	font-weight: bold;
-	padding-top: 3%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
+
+.media-list{
+	padding-bottom: 1%;
+	padding-top: 1%;
 }
