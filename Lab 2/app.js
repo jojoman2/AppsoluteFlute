@@ -12,6 +12,7 @@ newsFeedApp.config(['$routeProvider',
             }).
             when('/news-item/:itemId', {
                 templateUrl: 'partials/detail-view.html'
+                
             }).
 
             otherwise({
