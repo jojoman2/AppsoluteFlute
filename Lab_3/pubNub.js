@@ -4,7 +4,10 @@ $( document ).ready(function() {
         message: function (m) {
             var textReceived = m["text"];
             console.log(textReceived);
-            $("#messageArea").append(textReceived);
+
+            //lägg till userNAme
+            //$("userName").append(userName);
+            $("#userMessage").append(textReceived);
         }
     });
 
