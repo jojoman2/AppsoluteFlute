@@ -1,1 +1,0 @@
-newsFeedApp.controller
