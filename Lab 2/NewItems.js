@@ -1,6 +1,8 @@
 /**
  * Created by Fredrik on 2015-04-22.
  */
+ // the Model
+ 
 newsFeedApp.factory('NewsFeedModel', function () {
 
     var NewsFeedModel = function () {
@@ -8,14 +10,13 @@ newsFeedApp.factory('NewsFeedModel', function () {
         this.filter = "Science";
     };
 
+//funktion för att byta filter
     NewsFeedModel.prototype.changeFilter = function(filter){
         this.filter = filter;
         if(this.toUpdate){
             this.toUpdate();
         }
     };
-
-
 
 
     NewsFeedModel.prototype.getItemsWithCategory = function(callback){
