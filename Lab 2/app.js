@@ -11,7 +11,8 @@ newsFeedApp.config(['$routeProvider',
                 controller: 'ListCtrl'
             }).
             when('/news-item/:itemId', {
-                templateUrl: 'partials/detail-view.html'
+                templateUrl: 'partials/detail-view.html',
+                controller: 'DetailsController'
                 
             }).
 
