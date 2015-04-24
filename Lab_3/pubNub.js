@@ -8,6 +8,8 @@ $( document ).ready(function() {
             //lägg till userNAme
             //$("userName").append(userName);
             $("#userMessage").append(textReceived);
+            var paragraph = $("<p>").html(textReceived);
+            $("#messageArea").append(paragraph);
         }
     });
 
