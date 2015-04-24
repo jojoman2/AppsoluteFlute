@@ -1,15 +1,22 @@
-PUBNUB_demo.subscribe({
-    channel: 'demo_tutorial',
-    message: function(m){console.log(m)}
+$( document ).ready(function() {
+    PUBNUB_demo.subscribe({
+        channel: 'chatMessages',
+        message: function (m) {
+            var textReceived = m["text"];
+            console.log(textReceived);
+            $("#messageArea").append(textReceived);
+        }
+    });
+
+    $("#inputText").submit(function(e){
+        e.preventDefault();
+        var inputText = $("#inputTextField").val();
+        PUBNUB_demo.publish({
+            channel: 'chatMessages',
+            message: {"text":inputText}
+        });
 });
 
-$("inputText").submit(function(e){
-	e.preventDefault();
-	var inputText = $("inputTextField").text();
 
-	PUBNUB_demo.publish({
-    channel: 'demo_tutorial',
-    message: {"color":"blue"}
-});
 
 });
