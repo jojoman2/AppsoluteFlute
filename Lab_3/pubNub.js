@@ -24,6 +24,11 @@ $( document ).ready(function() {
         channel: 'chatMessages',
         message: function (m) {
             var textReceived = m["text"];
+            console.log(textReceived);
+
+            //lägg till userNAme
+            //$("userName").append(userName);
+            $("#userMessage").append(textReceived);
             var paragraph = $("<p>").html(textReceived);
             $("#messageArea").append(paragraph);
         }
