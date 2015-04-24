@@ -3,8 +3,8 @@ $( document ).ready(function() {
         channel: 'chatMessages',
         message: function (m) {
             var textReceived = m["text"];
-            console.log(textReceived);
-            $("#messageArea").append(textReceived);
+            var paragraph = $("<p>").html(textReceived);
+            $("#messageArea").append(paragraph);
         }
     });
 
