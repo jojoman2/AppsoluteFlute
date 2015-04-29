@@ -1,44 +1,60 @@
 $( document ).ready(function() {
-    Compass.noSupport(function () {
-        //$('.compass').hide();
-        $('#coordinateInstruction').text("No support for compass");
-    });
 
-    Compass.needGPS(function () {
-        //$('.go-outside-message').show();          // Step 1: we need GPS signal
-        $('#coordinateInstruction').text("Go outside");
-    }).needMove(function () {
-        //$('.go-outside-message').hide()
-        //$('.move-and-hold-ahead-message').show(); // Step 2: user must go forward
-        $('#coordinateInstruction').text("Move and hold ahead");
-    }).init(function () {
-        //$('.move-and-hold-ahead-message').hide(); // GPS hack is enabled
-        $('#coordinateInstruction').text("GPS HACK");
-    });
+    oldDirectionName = "No heading";
+    if (window.DeviceOrientationEvent) {
+        // Listen for the deviceorientation event and handle the raw data
+        window.addEventListener('deviceorientation', function(event) {
+            var compassdir;
 
-    Compass.watch(function (heading) {
-        $('#coordinates2').text(heading);
-        //$('.compass').css('transform', 'rotate(' + (-heading) + 'deg)');
-    });
-    PUBNUB_demo.subscribe({
-        channel: 'chatMessages',
-        message: function (m) {
-            var textReceived = m["text"];
-            console.log(textReceived);
+            if(event.webkitCompassHeading) {
+                // Apple works only with this, alpha doesn't work
+                compassdir = event.webkitCompassHeading;
+            }
+            else {
+                compassdir = event.alpha;
+            }
+            var currentDirectionName;
+            //$('#coordinates').text(compassdir);
+            if(compassdir>315||compassdir<45){
+                currentDirectionName = "North";
+            }
+            else if(compassdir<135){
+                currentDirectionName = "West";
+            }
+            else if(compassdir<225){
+                currentDirectionName = "South"
+            }
+            else{
+                currentDirectionName = "East"
+            }
+            $("#userMessage").text(currentDirectionName);
+            if(currentDirectionName!=oldDirectionName){
+                if(oldDirectionName!="No Heading") {
+                    pubnub.unsubscribe(oldDirectionName);
+                }
+                pubnub.subscribe({
+                    channel: currentDirectionName,
+                    message: function (m) {
+                        var textReceived = m["text"];
+                        console.log(textReceived);
 
-            //lägg till userNAme
-            //$("userName").append(userName);
-            $("#userMessage").append(textReceived);
-            var paragraph = $("<p>").html(textReceived);
-            $("#messageArea").append(paragraph);
-        }
-    });
+                        var paragraph = $("<p>").html(textReceived);
+                        $("#messageArea").append(paragraph);
+                    }
+                });
+                oldDirectionName = currentDirectionName;
+
+
+            }
+        });
+    }
+
 
     $("#inputText").submit(function(e){
         e.preventDefault();
         var inputText = $("#inputTextField").val();
-        PUBNUB_demo.publish({
-            channel: 'chatMessages',
+        pubnub.publish({
+            channel: oldDirectionName,
             message: {"text":inputText}
         });
 
