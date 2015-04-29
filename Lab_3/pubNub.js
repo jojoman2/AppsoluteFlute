@@ -27,11 +27,14 @@ $( document ).ready(function() {
             else{
                 currentDirectionName = "East"
             }
-            $("#userMessage").text(currentDirectionName);
-            if(currentDirectionName!=oldDirectionName){
+
+
+            if(currentDirectionName !== oldDirectionName){
+                $("#userMessage").text(currentDirectionName);
                 if(oldDirectionName!="No Heading") {
                     pubnub.unsubscribe(oldDirectionName);
                 }
+
                 pubnub.subscribe({
                     channel: currentDirectionName,
                     message: function (m) {
@@ -42,6 +45,7 @@ $( document ).ready(function() {
                         $("#messageArea").append(paragraph);
                     }
                 });
+
                 oldDirectionName = currentDirectionName;
 
 
@@ -52,6 +56,7 @@ $( document ).ready(function() {
 
     $("#inputText").submit(function(e){
         e.preventDefault();
+
         var inputText = $("#inputTextField").val();
         pubnub.publish({
             channel: oldDirectionName,
