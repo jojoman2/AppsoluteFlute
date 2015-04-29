@@ -1,5 +1,7 @@
 $( document ).ready(function() {
 
+
+
     oldDirectionName = "No heading";
     if (window.DeviceOrientationEvent) {
         // Listen for the deviceorientation event and handle the raw data
@@ -30,10 +32,18 @@ $( document ).ready(function() {
 
 
             if(currentDirectionName !== oldDirectionName){
-                $("#userMessage").text(currentDirectionName);
-                if(oldDirectionName!="No Heading") {
+
+
+
+
+                if(oldDirectionName !== "No heading") {
                     pubnub.unsubscribe(oldDirectionName);
                 }
+
+
+
+
+
 
                 pubnub.subscribe({
                     channel: currentDirectionName,
@@ -46,7 +56,11 @@ $( document ).ready(function() {
                     }
                 });
 
+
                 oldDirectionName = currentDirectionName;
+
+
+
 
 
             }
