@@ -42,8 +42,13 @@ $( document ).ready(function() {
             message: {"text":inputText}
         });
 
-});
+    });
 
+    $('#loginButton').click(function(){
+        if (!$.cookie('userName')){
+            window.location.href='firstPage.html';
+        }
+    });
 
 
 });
