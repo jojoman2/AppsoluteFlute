@@ -33,35 +33,25 @@ $( document ).ready(function() {
 
             if(currentDirectionName !== oldDirectionName){
 
-
-
-
                 if(oldDirectionName !== "No heading") {
                     pubnub.unsubscribe(oldDirectionName);
                 }
-
-
-
-
-
 
                 pubnub.subscribe({
                     channel: currentDirectionName,
                     message: function (m) {
                         var textReceived = m["text"];
-                        console.log(textReceived);
 
                         var paragraph = $("<p>").html($.cookie('userName') + ": " + textReceived);
                         $("#messageArea").append(paragraph);
                     }
                 });
+                console.log("Subscribing to "+oldDirectionName);
 
 
                 oldDirectionName = currentDirectionName;
 
-
-
-
+                $("#coordinates").text(oldDirectionName);
 
             }
         });
@@ -72,6 +62,9 @@ $( document ).ready(function() {
         e.preventDefault();
 
         var inputText = $("#inputTextField").val();
+
+        console.log("Sent "+inputText+" to "+oldDirectionName);
+
         pubnub.publish({
             channel: oldDirectionName,
             message: {"text":inputText}
