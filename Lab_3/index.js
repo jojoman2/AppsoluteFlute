@@ -65,11 +65,8 @@ $( document ).ready(function() {
 
     });
 
-    $('#loginButton').click(function(){
-        if (!$.cookie('userName')){
-            window.location.href='firstPage.html';
-        }
-    });
-
-
+    if (!$.cookie('userName')){
+        window.location.href='firstPage.html';
+    }
+    
 });
