@@ -51,7 +51,7 @@ $( document ).ready(function() {
                         var textReceived = m["text"];
                         console.log(textReceived);
 
-                        var paragraph = $("<p>").html(textReceived);
+                        var paragraph = $("<p>").html($.cookie('userName') + ": " + textReceived);
                         $("#messageArea").append(paragraph);
                     }
                 });
