@@ -51,6 +51,8 @@ $( document ).ready(function() {
                 
                 oldDirectionName = currentDirectionName;
 
+                $("#coordinates").text(oldDirectionName);
+
 
             }
         });
