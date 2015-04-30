@@ -63,6 +63,7 @@ $( document ).ready(function() {
         e.preventDefault();
 
         var inputText = $("#inputTextField").val();
+        $('#inputTextField').val('');
         var username = $.cookie('userName');
 
         console.log("Sent "+inputText+" to "+oldDirectionName);
@@ -73,9 +74,10 @@ $( document ).ready(function() {
         });
 
     });
+
     /*$('#inputTextField').focus(function(){
         $(this).val('');
-    });*/   
+    }); */  
 
     if (!$.cookie('userName')){
         window.location.href='firstPage.html';
