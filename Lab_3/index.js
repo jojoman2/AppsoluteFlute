@@ -1,7 +1,5 @@
 $( document ).ready(function() {
 
-
-
     oldDirectionName = "No heading";
     if (window.DeviceOrientationEvent) {
         // Listen for the deviceorientation event and handle the raw data
@@ -50,11 +48,9 @@ $( document ).ready(function() {
                     }
                 });
                 console.log("Subscribing to "+currentDirectionName);
-
-
+                
                 oldDirectionName = currentDirectionName;
 
-                $("#coordinates").text(oldDirectionName);
 
             }
         });
@@ -77,7 +73,7 @@ $( document ).ready(function() {
     });
     /*$('#inputTextField').focus(function(){
         $(this).val('');
-    });*/
+    });*/   
 
     if (!$.cookie('userName')){
         window.location.href='firstPage.html';
