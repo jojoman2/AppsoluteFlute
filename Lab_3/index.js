@@ -45,7 +45,6 @@ $( document ).ready(function() {
                         $("#messageArea").append(paragraph);
                     }
                 });
-
                 oldDirectionName = currentDirectionName;
 
 
@@ -61,9 +60,10 @@ $( document ).ready(function() {
         pubnub.publish({
             channel: oldDirectionName,
             message: {"text":inputText}
-        });
-
     });
+    /*$('#inputTextField').focus(function(){
+        $(this).val('');
+    });*/
 
     if (!$.cookie('userName')){
         window.location.href='firstPage.html';
