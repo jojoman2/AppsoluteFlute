@@ -32,10 +32,12 @@ $( document ).ready(function() {
 
 
             if(currentDirectionName !== oldDirectionName){
+                console.log(currentDirectionName +" " + oldDirectionName);
 
-                if(oldDirectionName !== "No heading") {
-                    pubnub.unsubscribe(oldDirectionName);
-                }
+                pubnub.unsubscribe(oldDirectionName);
+                console.log("Unsubscribing to "+oldDirectionName);
+                /*if(oldDirectionName !== "No heading") {
+                }*/
 
                 pubnub.subscribe({
                     channel: currentDirectionName,
@@ -47,7 +49,7 @@ $( document ).ready(function() {
                         $("#messageArea").append(paragraph);
                     }
                 });
-                console.log("Subscribing to "+oldDirectionName);
+                console.log("Subscribing to "+currentDirectionName);
 
 
                 oldDirectionName = currentDirectionName;
