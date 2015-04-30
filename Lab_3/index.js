@@ -1,5 +1,7 @@
 $( document ).ready(function() {
 
+
+
     oldDirectionName = "No heading";
     if (window.DeviceOrientationEvent) {
         // Listen for the deviceorientation event and handle the raw data
@@ -30,8 +32,8 @@ $( document ).ready(function() {
 
 
             if(currentDirectionName !== oldDirectionName){
-                $("#userMessage").text(currentDirectionName);
-                if(oldDirectionName!="No Heading") {
+
+                if(oldDirectionName !== "No heading") {
                     pubnub.unsubscribe(oldDirectionName);
                 }
 
@@ -39,14 +41,20 @@ $( document ).ready(function() {
                     channel: currentDirectionName,
                     message: function (m) {
                         var textReceived = m["text"];
-                        console.log(textReceived);
 
                         var paragraph = $("<p>").html($.cookie('userName') + ": " + textReceived);
                         $("#messageArea").append(paragraph);
                     }
                 });
+<<<<<<< HEAD
+=======
+                console.log("Subscribing to "+oldDirectionName);
+
+
+>>>>>>> origin/master
                 oldDirectionName = currentDirectionName;
 
+                $("#coordinates").text(oldDirectionName);
 
             }
         });
@@ -57,6 +65,9 @@ $( document ).ready(function() {
         e.preventDefault();
 
         var inputText = $("#inputTextField").val();
+
+        console.log("Sent "+inputText+" to "+oldDirectionName);
+
         pubnub.publish({
             channel: oldDirectionName,
             message: {"text":inputText}
