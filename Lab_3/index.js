@@ -30,9 +30,12 @@ $( document ).ready(function() {
 
 
             if(currentDirectionName !== oldDirectionName){
-                console.log(currentDirectionName +" " + oldDirectionName);
 
-                pubnub.unsubscribe(oldDirectionName);
+                pubnub.unsubscribe(
+                    {
+                        channel: oldDirectionName
+                    }
+                );
                 console.log("Unsubscribing to "+oldDirectionName);
                 /*if(oldDirectionName !== "No heading") {
                 }*/
@@ -42,6 +45,7 @@ $( document ).ready(function() {
                     message: function (m) {
                         var textReceived = m["text"];
                         var username = m["user"];
+                        console.log("Received " +textReceived+" on channel "+m["channel"]);
 
                         var paragraph = $("<p>").html(username + ": " + textReceived);
                         $("#messageArea").append(paragraph);
@@ -70,7 +74,7 @@ $( document ).ready(function() {
 
         pubnub.publish({
             channel: oldDirectionName,
-            message: {"text":inputText,"user":username}
+            message: {"text":inputText,"user":username,"channel":oldDirectionName}
         });
 
     });
