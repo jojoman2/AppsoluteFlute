@@ -73,6 +73,9 @@ $( document ).ready(function() {
         });
 
     });
+    /*$('#inputTextField').focus(function(){
+        $(this).val('');
+    });*/
 
     if (!$.cookie('userName')){
         window.location.href='firstPage.html';
