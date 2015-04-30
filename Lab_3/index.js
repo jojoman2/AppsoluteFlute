@@ -41,8 +41,9 @@ $( document ).ready(function() {
                     channel: currentDirectionName,
                     message: function (m) {
                         var textReceived = m["text"];
+                        var username = m["user"];
 
-                        var paragraph = $("<p>").html($.cookie('userName') + ": " + textReceived);
+                        var paragraph = $("<p>").html(username + ": " + textReceived);
                         $("#messageArea").append(paragraph);
                     }
                 });
@@ -62,12 +63,13 @@ $( document ).ready(function() {
         e.preventDefault();
 
         var inputText = $("#inputTextField").val();
+        var username = $.cookie('userName');
 
         console.log("Sent "+inputText+" to "+oldDirectionName);
 
         pubnub.publish({
             channel: oldDirectionName,
-            message: {"text":inputText}
+            message: {"text":inputText,"user":username}
         });
 
     });
