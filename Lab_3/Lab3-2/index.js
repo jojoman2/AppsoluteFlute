@@ -1,7 +1,7 @@
 $( document ).ready(function() {
 
     if (!$.cookie('userName')){
-        window.location.href='firstPage.html';
+        window.location.href='../Lab3-1/firstPage.html';
     }
     else {
 
