@@ -1,52 +1,46 @@
+function geohash( coord, resolution ) {
+    var rez = Math.pow( 10, resolution || 0 );
+    return Math.floor(coord * rez) / rez;
+}
+
 $( document ).ready(function() {
+    var resolution = 2;
+
+
 
     if (!$.cookie('userName')){
-        window.location.href='../Lab3-1/firstPage.html';
+        window.location.href='firstPage.html';
     }
     else {
 
-        oldDirectionName = "No heading";
-        if (window.DeviceOrientationEvent) {
-            // Listen for the deviceorientation event and handle the raw data
-            window.addEventListener('deviceorientation', function (event) {
-                var compassdir;
-
-                if (event.webkitCompassHeading) {
-                    // Apple works only with this, alpha doesn't work
-                    compassdir = event.webkitCompassHeading;
-                }
-                else {
-                    compassdir = event.alpha;
-                }
-                var currentDirectionName;
-                //$('#coordinates').text(compassdir);
-                if (compassdir > 315 || compassdir < 45) {
-                    currentDirectionName = "North";
-                }
-                else if (compassdir < 135) {
-                    currentDirectionName = "West";
-                }
-                else if (compassdir < 225) {
-                    currentDirectionName = "South"
-                }
-                else {
-                    currentDirectionName = "East"
-                }
+        pubnub = PUBNUB.init({
+            publish_key: publish_key,
+            subscribe_key: subscribe_key,
+            uuid: $.cookie('userName')
+        });
 
 
-                if (currentDirectionName !== oldDirectionName) {
+        oldDirectionGroup = "None";
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(function(position) {
+                var xCoordGroup = geohash(position.coords.latitude, resolution);
+                var yCoordGroup = geohash(position.coords.longitude, resolution);
+                var locationGroup = xCoordGroup + " " + yCoordGroup;
 
-                    pubnub.unsubscribe(
-                        {
-                            channel: oldDirectionName
-                        }
-                    );
-                    console.log("Unsubscribing to " + oldDirectionName);
-                    /*if(oldDirectionName !== "No heading") {
-                     }*/
+                if (locationGroup !== oldDirectionGroup) {
+
+                    $("#coordinates").html(locationGroup);
+
+                    pubnub.unsubscribe({
+                        channel: oldDirectionGroup
+                    });
 
                     pubnub.subscribe({
-                        channel: currentDirectionName,
+                        channel: locationGroup,
+                        presence: function(m){
+                            var occupancy = m["occupancy"];
+                            $("#chatCounter").html(occupancy+" subscribers");
+                        },
                         message: function (m) {
                             var textReceived = m["text"];
                             var username = m["user"];
@@ -56,15 +50,14 @@ $( document ).ready(function() {
                             $("#messageArea").append(paragraph);
                         }
                     });
-                    console.log("Subscribing to " + currentDirectionName);
 
-                    oldDirectionName = currentDirectionName;
-
-                    $("#coordinates").text(oldDirectionName);
-
+                    oldDirectionGroup = locationGroup;
 
                 }
             });
+        }
+        else {
+            $("#messageArea").html("Location not supported");
         }
 
 
@@ -76,11 +69,11 @@ $( document ).ready(function() {
             inputTextField.val('');
             var username = $.cookie('userName');
 
-            console.log("Sent " + inputText + " to " + oldDirectionName);
+            console.log("Sent " + inputText + " to " + oldDirectionGroup);
 
             pubnub.publish({
-                channel: oldDirectionName,
-                message: {"text": inputText, "user": username, "channel": oldDirectionName}
+                channel: oldDirectionGroup,
+                message: {"text": inputText, "user": username, "channel": oldDirectionGroup}
             });
 
         });
@@ -90,4 +83,12 @@ $( document ).ready(function() {
          }); */
     }
     
+});
+
+$( window ).unload(function() {
+
+    pubnub.unsubscribe({
+        channel: oldDirectionGroup
+    });
+    return "hhehsdf";
 });

@@ -6,7 +6,7 @@ $( document ).ready(function() {
     });
 
     if (!$.cookie('userName')){
-        window.location.href='../Lab3-1/firstPage.html';
+        window.location.href='firstPage.html';
     }
     else {
 
