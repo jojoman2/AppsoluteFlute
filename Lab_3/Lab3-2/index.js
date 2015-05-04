@@ -7,8 +7,8 @@ $( document ).ready(function() {
     var resolution = 2;
 
 
-
-    if (!$.cookie('userName')){
+    var thisUser = $.cookie('userName');
+    if (!thisUser){
         window.location.href='firstPage.html';
     }
     else {
@@ -47,6 +47,9 @@ $( document ).ready(function() {
                             console.log("Received " + textReceived + " on channel " + m["channel"]);
 
                             var paragraph = $("<p>").html(username + ": " + textReceived);
+                            if(username === thisUser){
+                                paragraph.addClass("userMessage");
+                            }
                             $("#messageArea").append(paragraph);
                         }
                     });
