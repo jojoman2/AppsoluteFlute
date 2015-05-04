@@ -1,5 +1,10 @@
 $( document ).ready(function() {
 
+    var pubnub = PUBNUB.init({
+        publish_key: publish_key,
+        subscribe_key: subscribe_key
+    });
+
     if (!$.cookie('userName')){
         window.location.href='../Lab3-1/firstPage.html';
     }
